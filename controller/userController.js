@@ -56,19 +56,19 @@ const registerUser = async (req, res) => {
 // login user
 const loginUser = async (req, res) => {
     try {
-        const { userName, password } = req.body;
+        const { email, password } = req.body;
         // Validate required fields
 
-        if (!userName || !password) {
+        if (!email || !password) {
             return res
             .status(400)
-            .json({ message: "userName and password are required"});
+            .json({ message: "email and password are required"});
         }
 
         // find the user by userName
-        const user = await User.findOne({ userName });
+        const user = await User.findOne({ email });
         if (!user) {
-            return res.status(404).json({ message: "Invalid Username"});
+            return res.status(404).json({ message: "Invalid "});
         }
         console.log(user);
         // compare password
@@ -77,7 +77,7 @@ const loginUser = async (req, res) => {
             return res.status(400).json({ message: "Invalid Password"});
         };
 
-        res.status(200).json(userResponse);
+        res.status(200).json(user);
     }   catch (error) {
         res.status(500).json({ message: "Error logging in", error});
     }
